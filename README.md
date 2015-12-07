@@ -1,3 +1,7 @@
+# Deprecated
+This verison was a quick implementation to solve a specific problem. It lives on as npm module at [sdellis/page_label_generator](https://github.com/sdellis/page_label_generator) and in [Plum](https://github.com/pulibrary/plum/blob/581314fa3baccd34652cadac132fd32f564c469c/app/assets/javascripts/label_generator.es6), the project for which it was initially made.
+
+----
 # Page Label Generator
 
 Study to implement https://github.com/pulibrary/plum/issues/7
