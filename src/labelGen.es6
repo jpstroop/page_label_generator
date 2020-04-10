@@ -11,18 +11,36 @@ module.exports = {
    * @param {string} [startWith=front] - If set to "back" and method=foliate,
    *   the first value only yielded once.
    * @param {string} [unitLabel=""] - A label for the unit, like "p. " or "f. ".
-   * @param {boolean} [brackete=false] - If true aAdd brackets ('[]') around the
+   * @param {boolean} [bracket=false] - If true add brackets ('[]') around the
    *   label.
+   * @param {boolean} [twoUp=false] - If true, yield two values as a time
+   * @param {string} [twoUpSeparator="/"] - If twoUp, separate the values
+   *   with this string.
+   * @param {string} [twoUpDir="ltr"] - ltr or rtl. If twoUp and "rtl", the
+   *   the larger value with be on the left of the separator
    */
   pageLabelGenerator: function*(start=1, method="paginate", frontLabel="",
-    backLabel="", startWith="front", unitLabel="", bracket=false) {
+    backLabel="", startWith="front", unitLabel="", bracket=false, twoUp=false,
+    twoUpSeparator="/", twoUpDir="ltr") {
     let numberer = this.pageNumberGenerator(start, method, startWith),
         frontBackLabeler = this.frontBackLabeler(frontLabel, backLabel, startWith),
         [bracketOpen, bracketClose] = bracket ? ['[',']'] : ['',''];
     while (true) {
-      let num = numberer.next().value,
-          side = frontBackLabeler.next().value;
-      yield `${bracketOpen}${unitLabel}${num}${side}${bracketClose}`.trim()
+      let openLabel = `${bracketOpen}${unitLabel}`,
+          closeLabel = bracketClose.trim(),
+          num1 = numberer.next().value,
+          side1 = frontBackLabeler.next().value;
+      if (!twoUp) {
+          yield `${openLabel}${num1}${side1}${closeLabel}`.trim();
+      } else {
+        let num2 = numberer.next().value,
+            side2 = frontBackLabeler.next().value;
+        if (twoUpDir=="rtl") {
+            yield `${openLabel}${num2}${side2}${twoUpSeparator}${num1}${side1}${closeLabel}`;
+        } else {
+            yield `${openLabel}${num1}${side1}${twoUpSeparator}${num2}${side2}${closeLabel}`
+        }
+      }
     }
   },
 

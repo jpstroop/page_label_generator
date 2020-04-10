@@ -45,6 +45,8 @@ $ babel-node
 
 > let mod = require("./lib/labelGen");
 
+> // Basic Numbering
+
 > let gen = mod.pageLabelGenerator();
 > gen.next().value;
 '1'
@@ -63,6 +65,8 @@ $ babel-node
 > gen.next().value;
 '[p. 8]'
 
+> // Foliation
+
 > let gen = mod.pageLabelGenerator(42, "foliate", " r", " v", "", "f. ", false);
 > gen.next().value;
 'f. 42 r'
@@ -74,7 +78,6 @@ $ babel-node
 'f. 43 v'
 
 > let gen = mod.pageLabelGenerator(42, "foliate", "r", "v", "back", "f. ", true);
-'use strict'
 > gen.next().value;
 '[f. 42v]'
 > gen.next().value;
@@ -86,7 +89,8 @@ $ babel-node
 > gen.next().value;
 '[f. 44v]'
 
-> // AND...
+> // Roman Numerals
+
 > let gen = mod.pageLabelGenerator('i', "paginate", "", "", "", "p. ", false);
 > gen.next().value;
 'p. i'
@@ -110,4 +114,40 @@ $ babel-node
 '[f. xliv (verso)]'
 > gen.next().value;
 '[f. xlv]'
+
+> // 2 Ups:
+
+> let gen = mod.pageLabelGenerator(42, "paginate", "", "", "", "", false, true, "/", "ltr");
+undefined
+> gen.next().value
+'42/43'
+> gen.next().value
+'44/45'
+> gen.next().value
+'46/47'
+> gen.next().value
+'48/49'
+
+> let gen = mod.pageLabelGenerator(42, "paginate", "", "", "", "p. ", false, true, "-", "rtl");
+undefined
+> gen.next().value
+'p. 43-42'
+> gen.next().value
+'p. 45-44'
+> gen.next().value
+'p. 47-46'
+> gen.next().value
+'p. 49-48'
+
+> let gen = mod.pageLabelGenerator(42, "foliate", "a", "b", "back", "f. ", true, true, "/", "rtl");
+undefined
+> gen.next().value
+'[f. 43a/42b]'
+> gen.next().value
+'[f. 44a/43b]'
+> gen.next().value
+'[f. 45a/44b]'
+> gen.next().value
+'[f. 46a/45b]'
+
 ```
