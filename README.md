@@ -1,5 +1,5 @@
 # Deprecated
-This verison was a quick implementation to solve a specific problem. It lives on (with many new features) as an npm module at [pulibrary/page_label_generator](https://github.com/pulibrary/page_label_generator/settings).
+This verison was a quick implementation to solve a specific problem. It lives on (with many new features) as an npm module at [pulibrary/page_label_generator](https://github.com/pulibrary/page_label_generator).
 
 ----
 # Page Label Generator
